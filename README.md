@@ -25,6 +25,9 @@ auth-app
 ```
 Where in:
 __mocks__ you will have the mock to mail service, so unit tests will not call the real mail package
+
 __unit__ you will have unit tests, working with mocks and stubs
+
 __integration__ you will have integration tests calling the database and other calling the API
+
 __coverage__ you will have the coverage report genereated by jest
