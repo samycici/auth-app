@@ -7,12 +7,9 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - run: npm install
+      - node/install-packages
       - run:
-        name: "Run Jest and Collect Coverage Reports"
-        command: npm test
-      - store_artifacts:
-        path: coverage
+          command: npm run test
 workflows:
     build-and-test:
       jobs:
