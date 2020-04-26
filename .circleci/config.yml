@@ -10,7 +10,11 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: npm test
+            - run:
+              name: "Run Jest and Collect Coverage Reports"
+              command: npm test
+            - store_artifacts:
+              path: coverage
 workflows:
     build-and-test:
       jobs:
