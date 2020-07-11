@@ -51,6 +51,9 @@
     "@babel/plugin-transform-runtime": "^7.4.0",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@stryker-mutator/core": ">=3.3.0",
+    "@stryker-mutator/javascript-mutator": "^3.3.0",
+    "@stryker-mutator/jest-runner": "^3.3.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-module-resolver": "^3.2.0",
@@ -63,11 +66,11 @@
     "postcss-loader": "^3.0.0",
     "purgecss-webpack-plugin": "^1.4.0",
     "redux-devtools-extension": "^2.13.8",
+    "serialize-javascript": ">=2.1.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-middleware": "^3.6.1",
-    "webpack-hot-middleware": "^2.24.3",
-    "serialize-javascript": ">=2.1.1"
+    "webpack-hot-middleware": "^2.24.3"
   }
 }
