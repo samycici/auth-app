@@ -137,3 +137,6 @@ workflows:
             requires:
               - tests
             context: sonarcloud
+            filters:
+              tags:
+                only: /.*/
