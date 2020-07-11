@@ -127,5 +127,5 @@ workflows:
 
         - sonar:
             requires:
-              - test
+              - tests
             context: sonarcloud
