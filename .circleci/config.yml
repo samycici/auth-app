@@ -101,7 +101,8 @@ workflows:
 
         - tests:
             requires:
-              - build
+              - audit
+              - lint
             filters:
               branches:
                 ignore:
