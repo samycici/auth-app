@@ -10,6 +10,9 @@ parameters:
     type: string
     default: "1.25.3"
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.0
+
 jobs:
   build:
     docker:
@@ -90,12 +93,10 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - run:
-            name: Run ls
-            command: ls
-        - run:
-            name: Run Sonar Analysis
-            command: make sonar BRANCH=$CIRCLE_BRANCH URL=$SONAR_HOST_URL KEY=$SONAR_LOGIN
+        - sonarcloud/scan
+        # - run:
+        #     name: Run Sonar Analysis
+        #     command: make sonar BRANCH=$CIRCLE_BRANCH URL=$SONAR_HOST_URL KEY=$SONAR_LOGIN
 
 workflows:
     build-and-test:
