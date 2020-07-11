@@ -1,4 +1,6 @@
-import { Router } from 'express'
+import {
+  Router
+} from 'express'
 import authRouter from '@routes/v1/auth'
 import healthRouter from '@routes/healthcheck'
 

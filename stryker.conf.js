@@ -2,12 +2,12 @@
  * @type {import('@stryker-mutator/api/core').StrykerOptions}
  */
 module.exports = {
-  mutator: "javascript",
-  packageManager: "npm",
-  reporters: ["html", "clear-text", "progress"],
-  testRunner: "jest",
+  mutator: 'javascript',
+  packageManager: 'npm',
+  reporters: ['html', 'clear-text', 'progress'],
+  testRunner: 'jest',
   transpilers: [],
-  coverageAnalysis: "off",
+  coverageAnalysis: 'off',
   dashboard: {
     project: 'github.com/samycici/auth-app'
   },
@@ -20,5 +20,5 @@ module.exports = {
     enableFindRelatedTests: false
   },
   timeoutMS: 15000,
-  tempDirName: 'stryker-tmp'
-};
+  tempDirName: '.stryker-tmp'
+}

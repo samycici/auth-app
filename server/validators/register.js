@@ -1,6 +1,8 @@
 import * as Yup from 'yup'
 import User from '@models/User'
-import { RegisterSchema } from '@server/validation-schemas'
+import {
+  RegisterSchema
+} from '@server/validation-schemas'
 
 /**
  * Validates the registration request
@@ -15,34 +17,40 @@ import { RegisterSchema } from '@server/validation-schemas'
  * @return {Object}
  */
 export default async (req, res, next) => {
-    const { name, email, password } = req.body
+  const {
+    name,
+    email,
+    password
+  } = req.body
 
-    try {
-        await RegisterSchema.validate({
-            name,
-            email,
-            password
-        })
+  try {
+    await RegisterSchema.validate({
+      name,
+      email,
+      password
+    })
 
-        const existingUser = await User.findOne({ email })
+    const existingUser = await User.findOne({
+      email
+    })
 
-        if (existingUser) {
-            throw new Yup.ValidationError(
-                'This email has already been taken.',
-                req.body,
-                'email'
-            )
-        }
-
-        return next()
-    } catch (error) {
-        return res.status(422).json({
-            message: 'Validation failed.',
-            data: {
-                errors: {
-                    [error.path]: error.message
-                }
-            }
-        })
+    if (existingUser) {
+      throw new Yup.ValidationError(
+        'This email has already been taken.',
+        req.body,
+        'email'
+      )
     }
+
+    return next()
+  } catch (error) {
+    return res.status(422).json({
+      message: 'Validation failed.',
+      data: {
+        errors: {
+          [error.path]: error.message
+        }
+      }
+    })
+  }
 }

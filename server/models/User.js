@@ -7,13 +7,13 @@ import randomstring from 'randomstring'
 import PasswordReset from '@models/PasswordReset'
 
 export const UserSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    createdAt: Date,
-    updatedAt: Date,
-    password: String,
-    emailConfirmedAt: Date,
-    emailConfirmCode: String
+  name: String,
+  email: String,
+  createdAt: Date,
+  updatedAt: Date,
+  password: String,
+  emailConfirmedAt: Date,
+  emailConfirmCode: String
 })
 
 /**
@@ -22,9 +22,9 @@ export const UserSchema = new mongoose.Schema({
  *
  * @return {null}
  */
-UserSchema.pre('save', async function() {
-    this.password = Bcrypt.hashSync(this.password)
-    this.emailConfirmCode = randomstring.generate()
+UserSchema.pre('save', async function () {
+  this.password = Bcrypt.hashSync(this.password)
+  this.emailConfirmCode = randomstring.generate()
 })
 
 /**
@@ -32,8 +32,8 @@ UserSchema.pre('save', async function() {
  *
  * @return {null}
  */
-UserSchema.post('save', async function() {
-    await this.sendEmailVerificationEmail()
+UserSchema.post('save', async function () {
+  await this.sendEmailVerificationEmail()
 })
 
 /**
@@ -41,8 +41,8 @@ UserSchema.post('save', async function() {
  *
  * @return {boolean}
  */
-UserSchema.methods.comparePasswords = function(password) {
-    return Bcrypt.compareSync(password, this.password)
+UserSchema.methods.comparePasswords = function (password) {
+  return Bcrypt.compareSync(password, this.password)
 }
 
 /**
@@ -50,8 +50,10 @@ UserSchema.methods.comparePasswords = function(password) {
  *
  * @return {string}
  */
-UserSchema.methods.generateToken = function() {
-    return jwt.sign({ id: this._id }, config.jwtSecret)
+UserSchema.methods.generateToken = function () {
+  return jwt.sign({
+    id: this._id
+  }, config.jwtSecret)
 }
 
 /**
@@ -59,15 +61,15 @@ UserSchema.methods.generateToken = function() {
  *
  * @return {Promise}
  */
-UserSchema.methods.sendEmailVerificationEmail = function() {
-    return new Mail('confirm-email')
-        .to(this.email)
-        .subject('Please confirm your email address.')
-        .data({
-            name: this.name,
-            url: `${config.url}/auth/emails/confirm/${this.emailConfirmCode}`
-        })
-        .send()
+UserSchema.methods.sendEmailVerificationEmail = function () {
+  return new Mail('confirm-email')
+    .to(this.email)
+    .subject('Please confirm your email address.')
+    .data({
+      name: this.name,
+      url: `${config.url}/auth/emails/confirm/${this.emailConfirmCode}`
+    })
+    .send()
 }
 
 /**
@@ -75,16 +77,16 @@ UserSchema.methods.sendEmailVerificationEmail = function() {
  *
  * @return {Promise}
  */
-UserSchema.methods.forgotPassword = async function() {
-    const token = randomstring.generate(32)
+UserSchema.methods.forgotPassword = async function () {
+  const token = randomstring.generate(32)
 
-    await PasswordReset.create({
-        token,
-        email: this.email,
-        createdAt: new Date()
-    })
+  await PasswordReset.create({
+    token,
+    email: this.email,
+    createdAt: new Date()
+  })
 
-    await this.sendForgotPasswordEmail(token)
+  await this.sendForgotPasswordEmail(token)
 }
 
 /**
@@ -92,15 +94,15 @@ UserSchema.methods.forgotPassword = async function() {
  *
  * @return {Promise}
  */
-UserSchema.methods.sendForgotPasswordEmail = async function(token) {
-    await new Mail('forgot-password')
-        .to(this.email)
-        .subject('You requested for a password reset.')
-        .data({
-            name: this.name,
-            url: `${config.url}/auth/passwords/reset/${token}`
-        })
-        .send()
+UserSchema.methods.sendForgotPasswordEmail = async function (token) {
+  await new Mail('forgot-password')
+    .to(this.email)
+    .subject('You requested for a password reset.')
+    .data({
+      name: this.name,
+      url: `${config.url}/auth/passwords/reset/${token}`
+    })
+    .send()
 }
 
 export default mongoose.model('User', UserSchema)

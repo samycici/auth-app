@@ -5,14 +5,16 @@ import bodyParser from 'body-parser'
 import config from '@server/config'
 import v1Router from '@server/routes/'
 
-Mongoose.connect(config.databaseUrl[config.environment], { useNewUrlParser: true })
+Mongoose.connect(config.databaseUrl[config.environment], {
+  useNewUrlParser: true
+})
 
 const app = new Express()
 
 app.use(
-    bodyParser.urlencoded({
-        extended: true
-    })
+  bodyParser.urlencoded({
+    extended: true
+  })
 )
 
 app.use(bodyParser.json())

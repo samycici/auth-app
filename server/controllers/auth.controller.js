@@ -9,39 +9,44 @@ import PasswordReset from '@models/PasswordReset'
  * @param {Object} res
  */
 const login = async (req, res) => {
-    const { email, password } = req.body
+  const {
+    email,
+    password
+  } = req.body
 
-    const failureResponse = () =>
-        res.status(401).json({
-            data: {
-                errors: {
-                    email: 'These credentials do not match our records.'
-                }
-            },
-            message: 'These credentials do not match our records.'
-        })
-
-    const user = await User.findOne({ email })
-
-    if (!user) {
-        return failureResponse()
-    }
-
-    const passwordIsCorrect = user.comparePasswords(password)
-
-    if (!passwordIsCorrect) {
-        return failureResponse()
-    }
-
-    const token = await user.generateToken()
-
-    return res.json({
-        data: {
-            user,
-            token
-        },
-        message: 'Login successful.'
+  const failureResponse = () =>
+    res.status(401).json({
+      data: {
+        errors: {
+          email: 'These credentials do not match our records.'
+        }
+      },
+      message: 'These credentials do not match our records.'
     })
+
+  const user = await User.findOne({
+    email
+  })
+
+  if (!user) {
+    return failureResponse()
+  }
+
+  const passwordIsCorrect = user.comparePasswords(password)
+
+  if (!passwordIsCorrect) {
+    return failureResponse()
+  }
+
+  const token = await user.generateToken()
+
+  return res.json({
+    data: {
+      user,
+      token
+    },
+    message: 'Login successful.'
+  })
 }
 
 /**
@@ -53,23 +58,27 @@ const login = async (req, res) => {
  * @return
  */
 const register = async (req, res) => {
-    const { name, email, password } = req.body
+  const {
+    name,
+    email,
+    password
+  } = req.body
 
-    const user = await User.create({
-        name,
-        email,
-        password
-    })
+  const user = await User.create({
+    name,
+    email,
+    password
+  })
 
-    const token = user.generateToken()
+  const token = user.generateToken()
 
-    return res.json({
-        data: {
-            user,
-            token
-        },
-        message: 'Account registered.'
-    })
+  return res.json({
+    data: {
+      user,
+      token
+    },
+    message: 'Account registered.'
+  })
 }
 
 /**
@@ -80,11 +89,11 @@ const register = async (req, res) => {
  * @return
  */
 const forgotPassword = async (req, res) => {
-    await req.authUser.forgotPassword()
+  await req.authUser.forgotPassword()
 
-    return res.json({
-        message: 'Forgot password email sent.'
-    })
+  return res.json({
+    message: 'Forgot password email sent.'
+  })
 }
 
 /**
@@ -95,18 +104,23 @@ const forgotPassword = async (req, res) => {
  * @return
  */
 const resetPassword = async (req, res) => {
-    const { password } = req.body
+  const {
+    password
+  } = req.body
 
-    await User.findOneAndUpdate(
-        { email: req.authUser.email },
-        { password: Bcrypt.hashSync(password) }
-    )
+  await User.findOneAndUpdate({
+    email: req.authUser.email
+  }, {
+    password: Bcrypt.hashSync(password)
+  })
 
-    await PasswordReset.findOneAndDelete({ email: req.authUser.email })
+  await PasswordReset.findOneAndDelete({
+    email: req.authUser.email
+  })
 
-    return res.json({
-        message: 'Password has been reset.'
-    })
+  return res.json({
+    message: 'Password has been reset.'
+  })
 }
 
 /**
@@ -116,13 +130,13 @@ const resetPassword = async (req, res) => {
  * @param {Object} res
  */
 const resendEmailConfirm = async (req, res) => {
-    if (!req.authUser.emailConfirmedAt) {
-        await req.authUser.sendEmailVerificationEmail()
-    }
+  if (!req.authUser.emailConfirmedAt) {
+    await req.authUser.sendEmailVerificationEmail()
+  }
 
-    return res.json({
-        message: 'Email confirmation resent.'
-    })
+  return res.json({
+    message: 'Email confirmation resent.'
+  })
 }
 
 /**
@@ -132,31 +146,31 @@ const resendEmailConfirm = async (req, res) => {
  * @param {Object} res
  */
 const emailConfirm = async (req, res) => {
-    const user = await User.findOneAndUpdate(
-        { email: req.authUser.email },
-        {
-            emailConfirmCode: null,
-            emailConfirmedAt: new Date()
-        },
-        { new: true }
-    )
+  const user = await User.findOneAndUpdate({
+    email: req.authUser.email
+  }, {
+    emailConfirmCode: null,
+    emailConfirmedAt: new Date()
+  }, {
+    new: true
+  })
 
-    const token = user.generateToken()
+  const token = user.generateToken()
 
-    return res.json({
-        message: 'Email confirmed.',
-        data: {
-            user,
-            token
-        }
-    })
+  return res.json({
+    message: 'Email confirmed.',
+    data: {
+      user,
+      token
+    }
+  })
 }
 
 export default {
-    login,
-    register,
-    emailConfirm,
-    resetPassword,
-    forgotPassword,
-    resendEmailConfirm
+  login,
+  register,
+  emailConfirm,
+  resetPassword,
+  forgotPassword,
+  resendEmailConfirm
 }
