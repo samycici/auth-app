@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "nodemon --exec babel-node server/index.js",
     "build:server": "babel server/ --out-dir dist/ --copy-files",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "webpack --production",
     "start": "node dist/index.js",
     "test": "jest"
   },
