@@ -1,6 +1,9 @@
 bootstrap: down kill up
 
 build:
+	docker-compose build
+
+build-server:
 	docker-compose up
 
 pre-push:
@@ -9,4 +12,4 @@ pre-push:
 test:
 	docker-compose up tests
 
-PHONY: build pre-push test
+PHONY: build build-server pre-push test

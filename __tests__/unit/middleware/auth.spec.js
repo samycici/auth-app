@@ -25,6 +25,7 @@ describe('The Auth middleware', () => {
     createdUser = await User.create(user)
   })
   it('Should call the next function if authentication succeds', async () => {
+    /* eslint-disable no-alert, camelcase */
     const access_token = createdUser.generateToken()
     const req = {
       body: {
