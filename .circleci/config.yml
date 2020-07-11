@@ -82,7 +82,7 @@ jobs:
             root: << pipeline.parameters.workingdir >>
             paths:
               - ./
-  sonarcloud:
+  sonar:
       machine: true
       working_directory: << pipeline.parameters.workingdir >>
       steps:
@@ -125,7 +125,7 @@ workflows:
               - audit
               - lint
 
-        - sonarcloud:
+        - sonar:
             requires:
               - test
             context: sonarcloud
