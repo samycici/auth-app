@@ -91,9 +91,9 @@ jobs:
             keys:
               - dependencies-{{ checksum "package-lock.json" }}
               - dependencies-
-        - sonarcloud/scan
         - attach_workspace:
-              at: << pipeline.parameters.workingdir >>
+            at: << pipeline.parameters.workingdir >>
+        - sonarcloud/scan
 
 workflows:
     build-and-test:
