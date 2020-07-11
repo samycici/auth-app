@@ -91,6 +91,9 @@ jobs:
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
         - run:
+            name: Run ls
+            command: ls
+        - run:
             name: Run Sonar Analysis
             command: make sonar BRANCH=$CIRCLE_BRANCH URL=$SONAR_HOST_URL KEY=$SONAR_LOGIN
 
