@@ -1,6 +1,5 @@
 import server from '@server/app'
 import supertest from 'supertest'
-import { connect, disconnect } from '@tests/utils/mongoose'
 
 const app = () => supertest(server)
 

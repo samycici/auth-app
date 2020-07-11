@@ -1,4 +1,3 @@
-import path from 'path'
 import Express from 'express'
 import Mongoose from 'mongoose'
 import bodyParser from 'body-parser'
