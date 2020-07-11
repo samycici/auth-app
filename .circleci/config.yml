@@ -85,8 +85,6 @@ jobs:
   sonar:
       machine: true
       working_directory: << pipeline.parameters.workingdir >>
-      environment:
-        PR_BASE_BRANCH: $CIRCLE_BRANCH 
       steps:
         - checkout
         - restore_cache:
@@ -102,6 +100,7 @@ jobs:
             coverage-paths: coverage/lcov.info
             covered-code-language: javascript
             test-report-paths: << pipeline.parameters.workingdir >>/junit.xml
+            scm-branch-name: $CIRCLE_BRANCH
 
 workflows:
     build-and-test:
