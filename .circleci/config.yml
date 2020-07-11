@@ -103,27 +103,15 @@ jobs:
 workflows:
     build-and-test:
       jobs:
-        - build:
-          filters:
-            branches:
-              ignore:
-                - master
+        - build
 
         - lint:
             requires:
               - build
-            filters:
-              branches:
-                ignore:
-                  - master
 
         - audit:
             requires:
               - build
-            filters:
-              branches:
-                ignore:
-                  - master
 
         - tests:
             requires:
