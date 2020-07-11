@@ -92,7 +92,7 @@ jobs:
               - dependencies-{{ checksum "package-lock.json" }}
               - dependencies-
         - attach_workspace:
-            at: << pipeline.parameters.workingdir >>
+            at: $SCANNER_DIRECTORY/.sonar
         - sonarcloud/scan
 
 workflows:
