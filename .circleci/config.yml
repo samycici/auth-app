@@ -93,7 +93,7 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - sonarcloud/scan-on-branch-commit:
+        - sonarcloud/scan:
             cache-version: v0
             github-project-slug: samycici/auth-app
             project-key: samycici_auth-app
