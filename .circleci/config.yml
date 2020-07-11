@@ -10,9 +10,6 @@ parameters:
     type: string
     default: "1.25.3"
 
-orbs:
-  sonarcloud: socialtables/sonarcloud@1.1.1
-
 jobs:
   build:
     docker:
@@ -93,14 +90,9 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - sonarcloud/install-cli
-        - sonarcloud/scan:
-            github-project-slug: samycici/auth-app
-            project-key: samycici_auth-app
-            coverage-paths: coverage/lcov.info
-            covered-code-language: javascript
-            test-report-paths: << pipeline.parameters.workingdir >>/junit.xml
-            scm-branch-name: CIRCLE_BRANCH
+        - run:
+            name: Run Sonar Analysis
+            command: make sonar BRANCH=$CIRCLE_BRANCH URL=$SONAR_HOST_URL KEY=$SONAR_LOGIN
 
 workflows:
     build-and-test:
@@ -137,6 +129,3 @@ workflows:
             requires:
               - tests
             context: sonarcloud
-            filters:
-              tags:
-                only: /.*/
