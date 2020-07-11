@@ -16,6 +16,7 @@ const _doc = {
     email: 'test@user.com',
     password: 'password',
     emailConfirmCode: 'jA7dgamcCzx6u3Z9YPXa2l70mDOFZtGm',
+    token: 'blablabla',
     __v: 0
   }
 const _update = {
@@ -98,24 +99,5 @@ describe('The Auth Controller', ()=>{
         expect(statusSpy).toHaveBeenCalledWith(401)
         expect(jsonSpy).toHaveBeenCalledWith(notMatchCredentials)
     })
-
-    it.skip('Should login with right credentials', async () => {
-        const req ={
-            body: {
-                email: 'test@user.com',
-                password: 'password'
-            }
-        }
-        const res = new Response()
-        const jsonSpy = jest.spyOn(res, 'json')
-
-        mockingoose(User).toReturn(_doc, 'findOne');
-        mockingoose(User).toReturn({ comparePasswords: true });
-        
-        await authController.login(req, res)
-        expect(jsonSpy).toHaveBeenCalledTimes(1)
-        expect(jsonSpy).toHaveBeenCalledWith(expect.objectContaining(loginSuccessful))
-    })
-
     
 })

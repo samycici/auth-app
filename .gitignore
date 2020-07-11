@@ -1,3 +1,10 @@
 node_modules
 .env
 coverage
+
+# stryker temp files
+.stryker-tmp
+
+# reports
+reports/
+dist/
