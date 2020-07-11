@@ -3,7 +3,6 @@ import supertest from 'supertest'
 import { disconnect } from '@tests/utils/mongoose'
 import User  from '@models/User'
 
-
 const app = () => supertest(server)
 
 const user = {
