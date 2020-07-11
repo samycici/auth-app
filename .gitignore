@@ -9,3 +9,4 @@ node_modules
 reports/
 junit.xml
 coverage
+.scannerwork/

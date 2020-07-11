@@ -10,6 +10,9 @@ parameters:
     type: string
     default: "1.25.3"
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.0
+
 jobs:
   build:
     docker:
@@ -69,6 +72,8 @@ jobs:
         - run:
             name: Run tests
             command: make test
+        - attach_workspace:
+            at: << pipeline.parameters.workingdir >>
         - store_artifacts:
             path: << pipeline.parameters.workingdir >>/junit.xml
         - store_test_results:
@@ -77,7 +82,24 @@ jobs:
             root: << pipeline.parameters.workingdir >>
             paths:
               - ./
-
+  sonar:
+      machine: true
+      working_directory: << pipeline.parameters.workingdir >>
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
+        - attach_workspace:
+            at: << pipeline.parameters.workingdir >>
+        - run:
+            name: Edit propertie file
+            command: |
+              echo "sonar.pullrequest.branch=${CIRCLE_BRANCH}" >> sonar-project.properties
+              echo "sonar.pullrequest.key=${CIRCLE_PULL_REQUEST//[!0-9]/}" >> sonar-project.properties
+        - sonarcloud/scan
+     
 workflows:
     build-and-test:
       jobs:
@@ -107,7 +129,9 @@ workflows:
             requires:
               - audit
               - lint
-            filters:
-              branches:
-                ignore:
-                  - master
+            context: sonarcloud
+
+        - sonar:
+            requires:
+              - tests
+            context: sonarcloud
