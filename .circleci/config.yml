@@ -88,12 +88,12 @@ jobs:
       steps:
         - checkout
         - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package-lock.json" }}
-            - dependencies-
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
         - sonarcloud/scan
         - attach_workspace:
-            at: << pipeline.parameters.workingdir >>
+              at: << pipeline.parameters.workingdir >>
 
 workflows:
     build-and-test:
