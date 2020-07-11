@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon --exec babel-node server/index.js",
     "build:server": "babel server/ --out-dir dist/ --copy-files",
+    "standard": "standard",
     "start": "node dist/index.js",
+    "test:mutation": "stryker run",
     "test": "jest"
   },
   "dependencies": {
@@ -43,11 +45,25 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-module-resolver": "^3.2.0",
+    "chance": "1.1.6",
     "glob-all": "^3.1.0",
+    "jest": "^25.4.0",
+    "mockingoose": "2.13.2",
     "nodemon": "^1.18.10",
     "serialize-javascript": ">=2.1.1",
-    "jest": "^25.4.0",
-    "supertest": "4.0.2",
-    "mockingoose": "2.13.2"
+    "standard": "^14.3.4",
+    "supertest": "4.0.2"
+  },
+  "standard": {
+    "globals": [
+      "beforeEach",
+      "describe",
+      "it",
+      "request",
+      "expect",
+      "jest",
+      "afterAll",
+      "beforeAll"
+    ]
   }
 }

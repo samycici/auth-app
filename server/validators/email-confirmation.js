@@ -1,6 +1,8 @@
 import * as Yup from 'yup'
 import User from '@models/User'
-import { EmailConfirmationSchema } from '@server/validation-schemas'
+import {
+  EmailConfirmationSchema
+} from '@server/validation-schemas'
 
 /**
  * Validates the login request
@@ -12,36 +14,38 @@ import { EmailConfirmationSchema } from '@server/validation-schemas'
  * @return {Object}
  */
 export default async (req, res, next) => {
-    const { token } = req.body
+  const {
+    token
+  } = req.body
 
-    try {
-        await EmailConfirmationSchema.validate({
-            token
-        })
+  try {
+    await EmailConfirmationSchema.validate({
+      token
+    })
 
-        const authUser = await User.findOne({
-            emailConfirmCode: token
-        })
+    const authUser = await User.findOne({
+      emailConfirmCode: token
+    })
 
-        if (!authUser) {
-            throw new Yup.ValidationError(
-                'Invalid email confirmation token.',
-                req.body,
-                'email'
-            )
-        }
-
-        req.authUser = authUser
-
-        return next()
-    } catch (error) {
-        return res.status(422).json({
-            message: 'Validation failed.',
-            data: {
-                errors: {
-                    [error.path]: error.message
-                }
-            }
-        })
+    if (!authUser) {
+      throw new Yup.ValidationError(
+        'Invalid email confirmation token.',
+        req.body,
+        'email'
+      )
     }
+
+    req.authUser = authUser
+
+    return next()
+  } catch (error) {
+    return res.status(422).json({
+      message: 'Validation failed.',
+      data: {
+        errors: {
+          [error.path]: error.message
+        }
+      }
+    })
+  }
 }

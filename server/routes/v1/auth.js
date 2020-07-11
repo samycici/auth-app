@@ -1,4 +1,6 @@
-import { Router } from 'express'
+import {
+  Router
+} from 'express'
 import authController from '@controllers/auth.controller'
 
 import authMiddleware from '@middleware/auth'
@@ -20,29 +22,29 @@ authRouter.post('/register', registerValidator, authController.register)
 
 /** Route for requesting a password reset email  */
 authRouter.post(
-    '/passwords/email',
-    forgotPasswordValidator,
-    authController.forgotPassword
+  '/passwords/email',
+  forgotPasswordValidator,
+  authController.forgotPassword
 )
 
 /** Route for resetting user password  */
 authRouter.post(
-    '/passwords/reset',
-    resetPasswordValidator,
-    authController.resetPassword
+  '/passwords/reset',
+  resetPasswordValidator,
+  authController.resetPassword
 )
 
 authRouter.post(
-    '/emails/confirm',
-    emailConfirmationValidator,
-    authController.emailConfirm
+  '/emails/confirm',
+  emailConfirmationValidator,
+  authController.emailConfirm
 )
 
 /** Route for resending confirmation email  */
 authRouter.post(
-    '/emails/confirm/resend',
-    authMiddleware,
-    authController.resendEmailConfirm
+  '/emails/confirm/resend',
+  authMiddleware,
+  authController.resendEmailConfirm
 )
 
 export default authRouter

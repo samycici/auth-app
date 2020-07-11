@@ -1,19 +1,17 @@
 module.exports = class Mail {
+  to () {
+    return this
+  }
 
-    to(){
-        return this
-    }
+  subject () {
+    return this
+  }
 
-    subject(){
-        return this
-    }
+  data () {
+    return this
+  }
 
-    data(){
-        return this
-    }
-
-    send(){
-        return this
-    }
-
+  send () {
+    return this
+  }
 }
