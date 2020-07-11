@@ -95,7 +95,7 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - scan-on-branch-commit:
+        - sonarcloud/scan-on-branch-commit:
             github-project-slug: samycici/auth-app
             project-key: samycici_auth-app
             coverage-paths: coverage/lcov.info
