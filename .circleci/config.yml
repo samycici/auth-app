@@ -100,7 +100,7 @@ jobs:
             coverage-paths: coverage/lcov.info
             covered-code-language: javascript
             test-report-paths: << pipeline.parameters.workingdir >>/junit.xml
-            scm-branch-name: $CIRCLE_BRANCH
+            scm-branch-name: CIRCLE_BRANCH
 
 workflows:
     build-and-test:
