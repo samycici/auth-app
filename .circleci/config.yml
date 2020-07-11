@@ -72,7 +72,8 @@ jobs:
         - run:
             name: Run tests
             command: make test
-        - sonarcloud/scan
+        - attach_workspace:
+            at: << pipeline.parameters.workingdir >>
         - store_artifacts:
             path: << pipeline.parameters.workingdir >>/junit.xml
         - store_test_results:
@@ -81,6 +82,18 @@ jobs:
             root: << pipeline.parameters.workingdir >>
             paths:
               - ./
+sonarcloud:
+      machine: true
+      working_directory: << pipeline.parameters.workingdir >>
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
+        - sonarcloud/scan
+        - attach_workspace:
+            at: << pipeline.parameters.workingdir >>
 
 workflows:
     build-and-test:
@@ -111,8 +124,8 @@ workflows:
             requires:
               - audit
               - lint
+
+        - sonarcloud:
+            requires:
+              - test
             context: sonarcloud
-            filters:
-              branches:
-                ignore:
-                  - master
