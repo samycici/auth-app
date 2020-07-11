@@ -85,6 +85,8 @@ jobs:
   sonar:
       machine: true
       working_directory: << pipeline.parameters.workingdir >>
+      environment:
+        PR_BASE_BRANCH: $CIRCLE_BRANCH 
       steps:
         - checkout
         - restore_cache:
@@ -93,7 +95,7 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - sonarcloud/scan:
+        - scan-on-branch-commit:
             github-project-slug: samycici/auth-app
             project-key: samycici_auth-app
             coverage-paths: coverage/lcov.info
