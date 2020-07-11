@@ -69,6 +69,8 @@ jobs:
         - run:
             name: Run tests
             command: make test
+        - store_artifacts:
+            path: << pipeline.parameters.workingdir >>/junit.xml
         - store_test_results:
             path: << pipeline.parameters.workingdir >>/junit.xml
         - persist_to_workspace:
