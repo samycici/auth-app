@@ -9,7 +9,7 @@
     "standard": "standard",
     "start": "node dist/index.js",
     "test:mutation": "stryker run",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "dependencies": {
     "@fullstackjs/mail": "^1.0.7",
@@ -49,6 +49,7 @@
     "glob-all": "^3.1.0",
     "husky": "4.2.5",
     "jest": "^25.4.0",
+    "jest-junit": "11.0.1",
     "mockingoose": "2.13.2",
     "nodemon": "^1.18.10",
     "serialize-javascript": ">=2.1.1",

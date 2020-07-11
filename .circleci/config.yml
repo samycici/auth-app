@@ -1,0 +1,113 @@
+version: 2.1
+parameters:
+  workingdir:
+    type: string
+    default: "~/app"
+  node_version:
+    type: string
+    default: "12.16.1"
+  docker_compose_version:
+    type: string
+    default: "1.25.3"
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:<< pipeline.parameters.node_version >>
+    working_directory: << pipeline.parameters.workingdir >>
+    steps:
+      - checkout
+      - run: |
+          npm install
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/<< pipeline.parameters.docker_compose_version >>/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Create env file
+          command: cp .env.example .env
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-{{ checksum "package-lock.json" }}
+  lint:
+    docker:
+      - image: circleci/node:<< pipeline.parameters.node_version >>
+    working_directory: << pipeline.parameters.workingdir >>
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package-lock.json" }}
+            - dependencies-
+      - run: |
+          npm run standard
+  audit:
+      docker:
+        - image: circleci/node:<< pipeline.parameters.node_version >>
+      working_directory: << pipeline.parameters.workingdir >>
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
+        - run: |
+            npm audit
+  tests:
+      machine: true
+      working_directory: << pipeline.parameters.workingdir >>
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
+        - run:
+            name: Run tests
+            command: make test
+        - store_artifacts:
+            path: << pipeline.parameters.workingdir >>/junit.xml
+        - store_test_results:
+            path: << pipeline.parameters.workingdir >>/junit.xml
+        - persist_to_workspace:
+            root: << pipeline.parameters.workingdir >>
+            paths:
+              - ./
+
+workflows:
+    build-and-test:
+      jobs:
+        - build:
+          filters:
+            branches:
+              ignore:
+                - master
+
+        - lint:
+            requires:
+              - build
+            filters:
+              branches:
+                ignore:
+                  - master
+
+        - audit:
+            requires:
+              - build
+            filters:
+              branches:
+                ignore:
+                  - master
+
+        - tests:
+            requires:
+              - audit
+              - lint
+            filters:
+              branches:
+                ignore:
+                  - master

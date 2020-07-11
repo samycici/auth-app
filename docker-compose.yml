@@ -9,8 +9,8 @@ services:
       interval: 10s
       retries: 5
     volumes:
-      - ./:/node-app
-      - ./node_modules:/node-app/node_modules
+      - ./:/app
+      - ./node_modules:/app/node_modules
     environment:
       NODE_ENV: development
     depends_on:
@@ -30,7 +30,9 @@ services:
     container_name: TESTS
     build: '.'
     command: npm test
+    volumes:
+        - ./:/node-app
     depends_on:
       - db
     links:
-      - db
+     - db
