@@ -5,6 +5,7 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
   reporters: ['default', 'jest-junit'],
+  testResultsProcessor: 'jest-junit',
   testMatch: [
     '**/__tests__/**/*.spec.js'
   ]
