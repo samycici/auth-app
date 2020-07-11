@@ -94,7 +94,6 @@ jobs:
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
         - sonarcloud/scan:
-            cache-version: v0
             github-project-slug: samycici/auth-app
             project-key: samycici_auth-app
             coverage-paths: coverage/lcov.info
