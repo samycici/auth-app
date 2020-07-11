@@ -11,7 +11,7 @@ parameters:
     default: "1.25.3"
 
 orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.0
+  sonarcloud: socialtables/sonarcloud@1.1.1
 
 jobs:
   build:
@@ -72,7 +72,6 @@ jobs:
         - run:
             name: Run tests
             command: make test
-        - sonarcloud/scan
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
         - store_artifacts:
@@ -93,8 +92,14 @@ jobs:
               - dependencies-{{ checksum "package-lock.json" }}
               - dependencies-
         - attach_workspace:
-            at: $SCANNER_DIRECTORY/.sonar
-        - sonarcloud/scan
+            at: << pipeline.parameters.workingdir >>
+        - sonarcloud/scan-on-branch-commit:
+            cache-version: v0
+            github-project-slug: samycici/auth-app
+            project-key: samycici_auth-app
+            coverage-paths: coverage/lcov.info
+            covered-code-language: javascript
+            test-report-paths: << pipeline.parameters.workingdir >>/junit.xml
 
 workflows:
     build-and-test:
@@ -127,7 +132,7 @@ workflows:
               - lint
             context: sonarcloud
 
-        # - sonar:
-        #     requires:
-        #       - tests
-        #     context: sonarcloud
+        - sonar:
+            requires:
+              - tests
+            context: sonarcloud
