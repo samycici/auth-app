@@ -1,6 +1,5 @@
 node_modules
 .env
-coverage
 .DS_Store
 
 # stryker temp files
@@ -8,4 +7,5 @@ coverage
 
 # reports
 reports/
-dist/
+junit.xml
+coverage

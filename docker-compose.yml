@@ -30,6 +30,8 @@ services:
     container_name: TESTS
     build: '.'
     command: npm test
+    volumes:
+        - ./:/node-app
     depends_on:
       - db
     links:

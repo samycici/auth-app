@@ -19,6 +19,16 @@ jobs:
       - checkout
       - run: |
           npm install
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/<< pipeline.parameters.docker_compose_version >>/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Create env file
+          command: cp .env.example .env
       - save_cache:
           paths:
             - node_modules
@@ -57,18 +67,10 @@ jobs:
               - dependencies-{{ checksum "package-lock.json" }}
               - dependencies-
         - run:
-            name: Install Docker Compose
-            command: |
-              set -x
-              curl -L https://github.com/docker/compose/releases/download/<< pipeline.parameters.docker_compose_version >>/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-              chmod +x ~/docker-compose
-              sudo mv ~/docker-compose /usr/local/bin/docker-compose
-        - run:
-            name: Create env file
-            command: cp .env.example .env
-        - run:
             name: Run tests
             command: make test
+        - store_test_results:
+            path: << pipeline.parameters.workingdir >>/junit.xml
         - persist_to_workspace:
             root: << pipeline.parameters.workingdir >>
             paths:

@@ -43,8 +43,4 @@ describe('The generateToken method', () => {
 
     expect(id).toEqual(JSON.parse(JSON.stringify(createdUser._id)))
   })
-
-  afterAll(async () => {
-    await disconnect()
-  })
 })
