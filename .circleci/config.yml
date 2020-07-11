@@ -93,11 +93,13 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
+        - run:
+            name: Edit propertie file
+            command: |
+              echo "sonar.pullrequest.branch=${CIRCLE_BRANCH}" >> sonar-project.properties
+              echo "sonar.pullrequest.key=${CIRCLE_PULL_REQUEST//[!0-9]/}"" >> sonar-project.properties
         - sonarcloud/scan
-        # - run:
-        #     name: Run Sonar Analysis
-        #     command: make sonar BRANCH=$CIRCLE_BRANCH URL=$SONAR_HOST_URL KEY=$SONAR_LOGIN
-
+     
 workflows:
     build-and-test:
       jobs:
