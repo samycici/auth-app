@@ -9,11 +9,11 @@ export default {
 
   databaseUrl: {
     development: process.env.DEVELOPMENT_DATABASE_URL ||
-      'mongodb://localhost:27017/mernmongo',
+      'mongodb://db:27017/mernmongo',
     production: process.env.PRODUCTION_DATABASE_URL ||
-      'mongodb://localhost:27017/mernmongo_production',
+      'mongodb://db:27017/mernmongo_production',
     test: process.env.TEST_DATABASE_URL ||
-      'mongodb://localhost:27017/mernmongo_test'
+      'mongodb://db:27017/mernmongo_test'
   },
 
   jwtSecret: process.env.JWT_SECRET || '1234',

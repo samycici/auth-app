@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  server:
+    container_name: NODEJS_SERVER
+    build: '.'
+    healthcheck:
+      test: curl --silent --fail localhost:3000/_health_check || exit 1
+      interval: 10s
+      retries: 5
+    volumes:
+      - ./:/node-app
+      - ./node_modules:/node-app/node_modules
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - '3000:3000'
+
+  db:
+    image: 'mongo'
+    container_name: MONGODB
+    ports:
+      - '27017:27017'
+
+  tests:
+    container_name: TESTS
+    build: '.'
+    command: npm test
+    depends_on:
+      - db
+    links:
+      - db
