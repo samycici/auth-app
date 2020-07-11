@@ -17,7 +17,7 @@ export default async (req, res, next) => {
   try {
     const token =
       req.body.access_token ||
-      req.headers['access_token'] ||
+      req.headers.access_token ||
       req.query.access_token
 
     const payload = jwt.verify(token, config.jwtSecret)

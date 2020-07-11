@@ -47,12 +47,19 @@
     "babel-plugin-module-resolver": "^3.2.0",
     "chance": "1.1.6",
     "glob-all": "^3.1.0",
+    "husky": "4.2.5",
     "jest": "^25.4.0",
     "mockingoose": "2.13.2",
     "nodemon": "^1.18.10",
     "serialize-javascript": ">=2.1.1",
     "standard": "^14.3.4",
     "supertest": "4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "make pre-push",
+      "...": "..."
+    }
   },
   "standard": {
     "globals": [
