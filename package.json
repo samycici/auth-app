@@ -8,7 +8,7 @@
     "build:server": "babel server/ --out-dir dist/ --copy-files",
     "standard": "standard",
     "start": "node dist/index.js",
-    "test:mutation": "stryker run",
+    "test:mutation": "stryker run --reporters dashboard --dashboard.version master",
     "test": "jest --forceExit"
   },
   "dependencies": {
@@ -55,12 +55,6 @@
     "serialize-javascript": ">=2.1.1",
     "standard": "^14.3.4",
     "supertest": "4.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "make pre-push",
-      "...": "..."
-    }
   },
   "standard": {
     "globals": [

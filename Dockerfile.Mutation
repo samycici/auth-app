@@ -1,0 +1,11 @@
+FROM tarampampam/node:13-alpine
+
+RUN git clone https://github.com/samycici/auth-app.git
+
+WORKDIR /auth-app
+
+RUN git checkout mutation-test
+
+RUN npm install --quiet
+
+CMD npm run test:mutation
