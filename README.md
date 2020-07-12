@@ -13,7 +13,7 @@
 
 ### To run the App
 
-First you'll need to create an account at [smtp.mailtrap.io](smtp.mailtrap.io) and get your credentials.
+First you'll need to create an account at [smtp.mailtrap.io](https://mailtrap.io/) and get your credentials.
 
 Then you can create your env file:
 
