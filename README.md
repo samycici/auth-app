@@ -59,6 +59,7 @@ auth-app
 └───coverage
 ```
 Where in:
+
 __mocks__ you will have the mock to mail service, so unit tests will not call the real mail package
 
 __unit__ you will have unit tests, working with mocks and stubs
