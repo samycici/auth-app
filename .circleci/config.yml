@@ -83,7 +83,8 @@ jobs:
             paths:
               - ./
   sonar_pull_request:
-      machine: true
+      docker:
+        - image: circleci/node:<< pipeline.parameters.node_version >>
       working_directory: << pipeline.parameters.workingdir >>
       steps:
         - checkout
