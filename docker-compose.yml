@@ -43,7 +43,7 @@ services:
       context: .
       dockerfile: Dockerfile.Mutation
     volumes:
-        - ./:/node-app
+        - ./:/auth-app
     depends_on:
       - db
     links:
