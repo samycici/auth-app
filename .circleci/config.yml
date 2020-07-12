@@ -121,19 +121,18 @@ workflows:
       jobs:
         - build
 
-        - lint:
-            requires:
-              - build
+        # - lint:
+        #     requires:
+        #       - build
 
-        - audit:
-            requires:
-              - build
+        # - audit:
+        #     requires:
+        #       - build
 
-        - tests:
-            requires:
-              - audit
-              - lint
-            context: sonarcloud
+        # - tests:
+        #     requires:
+        #       - audit
+        #       - lint
 
         - sonar_pull_request:
             requires:
@@ -146,7 +145,7 @@ workflows:
 
         - sonar_master:
             requires:
-              - tests
+              - build
             context: sonarcloud
             filters:
               branches:
