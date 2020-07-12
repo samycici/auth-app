@@ -114,6 +114,21 @@ jobs:
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
         - sonarcloud/scan
+  mutation:
+    docker:
+        - image: circleci/node:<< pipeline.parameters.node_version >>
+    working_directory: << pipeline.parameters.workingdir >>
+    steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - dependencies-{{ checksum "package-lock.json" }}
+              - dependencies-
+        - attach_workspace:
+            at: << pipeline.parameters.workingdir >>
+        - run:
+            name: Run mutation
+            command: make mutation
      
 workflows:
     build-and-test:
@@ -146,6 +161,10 @@ workflows:
             requires:
               - tests
             context: sonarcloud
+            filters:
+              branches:
+                only: master
+        - mutation:
             filters:
               branches:
                 only: master
