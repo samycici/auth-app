@@ -112,9 +112,8 @@ jobs:
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
         - run:
-            name: Edit propertie file
-            command: echo "sonar.branch.name=master" >> sonar-project.properties
-        - sonarcloud/scan
+            name: Run using docker image
+            command: make sonar URL=$SONAR_HOST_URL  KEY=$SONAR_TOKEN
      
 workflows:
     build-and-test:
