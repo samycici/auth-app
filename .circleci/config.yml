@@ -85,7 +85,6 @@ jobs:
   sonar_pull_request:
       docker:
         - image: circleci/node:<< pipeline.parameters.node_version >>
-      machine: true
       working_directory: << pipeline.parameters.workingdir >>
       steps:
         - checkout
@@ -105,7 +104,6 @@ jobs:
   sonar_master:
       docker:
         - image: circleci/node:<< pipeline.parameters.node_version >>
-      machine: true
       working_directory: << pipeline.parameters.workingdir >>
       steps:
         - checkout
