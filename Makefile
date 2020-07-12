@@ -6,6 +6,9 @@ build:
 build-server:
 	docker-compose up
 
+mutation:
+	docker-compose up mutation
+
 pre-push:
 	@npm run standard && make test
 

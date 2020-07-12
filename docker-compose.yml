@@ -36,3 +36,15 @@ services:
       - db
     links:
      - db
+
+  mutation:
+    container_name: MUTATION
+    build:
+      context: .
+      dockerfile: Dockerfile.Mutation
+    volumes:
+        - ./:/node-app
+    depends_on:
+      - db
+    links:
+     - db
