@@ -44,6 +44,8 @@ services:
       dockerfile: Dockerfile.Mutation
     volumes:
         - ./:/auth-app
+    environment:
+      - STRYKER_DASHBOARD_API_KEY=$STRYKER_DASHBOARD_API_KEY
     depends_on:
       - db
     links:

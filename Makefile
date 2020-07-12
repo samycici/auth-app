@@ -4,7 +4,7 @@ build:
 	docker-compose build
 
 build-server:
-	docker-compose up
+	docker-compose up server db
 
 mutation:
 	docker-compose up mutation
