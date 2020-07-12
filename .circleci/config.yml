@@ -111,9 +111,7 @@ jobs:
               - dependencies-
         - attach_workspace:
             at: << pipeline.parameters.workingdir >>
-        - run:
-            name: Run using docker image
-            command: make sonar URL=$SONAR_HOST_URL  KEY=$SONAR_TOKEN
+        - sonarcloud/scan
      
 workflows:
     build-and-test:
