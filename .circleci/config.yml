@@ -101,8 +101,7 @@ jobs:
               echo "sonar.pullrequest.base=master" >> sonar-project.properties
         - sonarcloud/scan
   sonar_master:
-      docker:
-        - image: circleci/node:<< pipeline.parameters.node_version >>
+      machine: true
       working_directory: << pipeline.parameters.workingdir >>
       steps:
         - checkout
