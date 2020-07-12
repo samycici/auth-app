@@ -115,8 +115,7 @@ jobs:
             at: << pipeline.parameters.workingdir >>
         - sonarcloud/scan
   mutation:
-    docker:
-        - image: circleci/node:<< pipeline.parameters.node_version >>
+    machine: true
     working_directory: << pipeline.parameters.workingdir >>
     steps:
         - checkout
