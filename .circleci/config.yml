@@ -113,7 +113,7 @@ jobs:
             at: << pipeline.parameters.workingdir >>
         - run:
             name: Edit propertie file
-            command: echo "sonar.branch.name=${CIRCLE_BRANCH}" >> sonar-project.properties
+            command: echo "sonar.branch.name=master" >> sonar-project.properties
         - sonarcloud/scan
      
 workflows:
