@@ -134,14 +134,14 @@ workflows:
         #       - audit
         #       - lint
 
-        - sonar_pull_request:
-            requires:
-              - tests
-            context: sonarcloud
-            filters:
-              branches:
-                ignore:
-                  - master
+        # - sonar_pull_request:
+        #     requires:
+        #       - tests
+        #     context: sonarcloud
+        #     filters:
+        #       branches:
+        #         ignore:
+        #           - master
 
         - sonar_master:
             requires:
